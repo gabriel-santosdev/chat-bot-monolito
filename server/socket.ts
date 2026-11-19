@@ -15,7 +15,6 @@ export function createSocketServer(httpServer: HttpServer): IoServer {
     maxHttpBufferSize: 64 * 1024, // mensagens de texto; arquivos vão pela API REST
   });
 
-  // ---------- Autenticação: o cliente envia o JWT em `auth.token` ----------
   io.use((socket, next) => {
     const user = userFromToken(socket.handshake.auth?.token);
     if (!user) return next(new Error('unauthorized'));
@@ -23,7 +22,7 @@ export function createSocketServer(httpServer: HttpServer): IoServer {
     next();
   });
 
-  // ---------- Presença: usuário online enquanto tiver ao menos uma conexão ----------
+  // Usuário fica online enquanto tiver ao menos uma conexão aberta
   const connections = new Map<number, number>();
   const broadcastPresence = () => io.emit('presence:update', [...connections.keys()]);
 

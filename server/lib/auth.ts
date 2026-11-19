@@ -29,7 +29,6 @@ export function signToken(user: User): string {
   return jwt.sign({}, config.jwtSecret, { subject: String(user.id), expiresIn: TOKEN_TTL, algorithm: 'HS256' });
 }
 
-// Retorna o usuário dono do token, ou null se o token for inválido/expirado
 export function userFromToken(token: unknown): User | null {
   if (typeof token !== 'string' || !token) return null;
   try {
@@ -41,7 +40,6 @@ export function userFromToken(token: unknown): User | null {
   }
 }
 
-// Middleware: exige "Authorization: Bearer <token>" e preenche req.user
 export function requireAuth(req: Request, _res: Response, next: NextFunction) {
   const header = req.headers.authorization ?? '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : null;
@@ -51,7 +49,6 @@ export function requireAuth(req: Request, _res: Response, next: NextFunction) {
   next();
 }
 
-// Uso dentro de rotas protegidas por requireAuth
 export function currentUser(req: Request): User {
   if (!req.user) throw new AppError(401, 'Não autenticado');
   return req.user;

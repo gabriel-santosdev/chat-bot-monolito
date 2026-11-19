@@ -1,13 +1,11 @@
 @use 'variables' as *;
 
-// Aplica estilos somente no tema escuro do Mantine
 @mixin dark {
   [data-mantine-color-scheme='dark'] & {
     @content;
   }
 }
 
-// Aplica estilos somente no tema claro do Mantine
 @mixin light {
   [data-mantine-color-scheme='light'] & {
     @content;

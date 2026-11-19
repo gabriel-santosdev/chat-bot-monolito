@@ -1,5 +1,3 @@
-// Carrega o .env (se existir) e valida as variáveis de ambiente.
-// Sem .env, os valores padrão abaixo são usados (exceto JWT_SECRET em produção).
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { z } from 'zod';

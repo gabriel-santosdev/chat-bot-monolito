@@ -1,6 +1,5 @@
 import { createTheme } from '@mantine/core';
 
-// Tema global do Mantine. Ajustes finos de layout ficam nos arquivos .scss (padrão BEM).
 export const theme = createTheme({
   primaryColor: 'violet',
   primaryShade: { light: 6, dark: 5 },

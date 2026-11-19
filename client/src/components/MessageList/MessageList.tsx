@@ -43,11 +43,11 @@ export function MessageList() {
     const last = items.at(-1);
 
     if (prev.roomId !== activeRoom?.id || prev.lastId === undefined) {
-      scrollToBottom(); // abriu a sala ou chegou a primeira página
+      scrollToBottom();
     } else if (firstId !== prev.firstId && last?.id === prev.lastId) {
       vp.scrollTop += vp.scrollHeight - prev.scrollHeight; // mensagens antigas no topo
     } else if (last && last.id !== prev.lastId && (nearBottom.current || last.author.id === me.id)) {
-      scrollToBottom(true); // mensagem nova
+      scrollToBottom(true);
     }
 
     snapshot.current = { roomId: activeRoom?.id, firstId, lastId: last?.id, scrollHeight: vp.scrollHeight };

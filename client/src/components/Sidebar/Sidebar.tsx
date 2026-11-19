@@ -15,7 +15,6 @@ export function Sidebar({ onNavigate }: Props) {
   const { rooms, activeRoom, unread, users, onlineIds, selectRoom } = useChat();
   const [modalOpened, modal] = useDisclosure(false);
 
-  // Online primeiro, depois em ordem alfabética
   const people = [...users].sort(
     (a, b) => Number(onlineIds.has(b.id)) - Number(onlineIds.has(a.id)) || a.displayName.localeCompare(b.displayName)
   );

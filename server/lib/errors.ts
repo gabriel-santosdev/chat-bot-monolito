@@ -12,7 +12,6 @@ export class AppError extends Error {
   }
 }
 
-// Valida `data` com o schema; em caso de erro lança 400 com a primeira mensagem do Zod.
 export function parse<S extends z.ZodType>(schema: S, data: unknown): z.output<S> {
   const result = schema.safeParse(data);
   if (!result.success) {

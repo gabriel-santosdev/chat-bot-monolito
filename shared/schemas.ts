@@ -1,4 +1,3 @@
-// Schemas de validação (Zod) usados pelo back-end e pelos formulários do front-end.
 import { z } from 'zod';
 
 export const MAX_MESSAGE_LENGTH = 4000;

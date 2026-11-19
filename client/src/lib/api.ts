@@ -2,7 +2,6 @@ import type { ApiError } from '@shared/types';
 
 const TOKEN_KEY = 'chat.token';
 
-// ---------- Token da sessão (localStorage, protegido contra modo privado/bloqueio) ----------
 export const session = {
   get(): string | null {
     try {
@@ -36,7 +35,6 @@ export const setUnauthorizedHandler = (fn: (() => void) | null) => {
   onUnauthorized = fn;
 };
 
-// Wrapper fino sobre fetch: JSON por padrão, token automático e erros da API viram exceções tipadas.
 export async function api<T>(path: string, init?: RequestInit & { json?: unknown }): Promise<T> {
   const { json, ...rest } = init ?? {};
   const token = session.get();

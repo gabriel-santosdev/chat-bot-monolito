@@ -4,7 +4,6 @@ import { transaction } from '../db/index.js';
 import { attachments, messages, rooms } from '../db/repositories.js';
 import { AppError, parse } from '../lib/errors.js';
 
-// Valida e grava uma mensagem (com anexo opcional). Retorna a mensagem completa.
 export function createMessage(author: User, input: unknown): Message {
   const { roomId, content, attachmentId } = parse(sendMessageSchema, input);
 

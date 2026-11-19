@@ -108,7 +108,6 @@ export function Composer() {
 
   return (
     <div className="composer">
-      {/* Solte um arquivo em qualquer lugar da tela para anexar */}
       <Dropzone.FullScreen
         active={!uploading && !attachment}
         multiple={false}

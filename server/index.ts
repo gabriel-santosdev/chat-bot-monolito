@@ -12,17 +12,14 @@ const io = createSocketServer(httpServer);
 const app = createApp(io);
 httpServer.on('request', app);
 
-// ---------- Front-end ----------
 if (config.isProd) {
-  // Produção: serve o build estático do React (pasta dist/)
   app.use(express.static(config.clientDistDir));
   app.use((req, res, next) => {
     if (req.method !== 'GET') return next();
     res.sendFile(resolve(config.clientDistDir, 'index.html'));
   });
 } else {
-  // Desenvolvimento: Vite como middleware (hot reload no mesmo processo e porta).
-  // O WebSocket do hot reload usa porta própria para não conflitar com outros projetos.
+  // Vite como middleware; o WebSocket do hot reload usa porta própria para não conflitar com outros projetos.
   const { createServer: createViteServer } = await import('vite');
   const vite = await createViteServer({
     server: { middlewareMode: true, hmr: { port: config.hmrPort } },

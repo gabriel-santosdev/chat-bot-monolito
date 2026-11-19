@@ -72,8 +72,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const knownUserIds = useRef(new Set<number>());
   const loadingRooms = useRef(new Set<number>());
 
-  // ---------- Carregamento via API ----------
-
   const fetchRooms = useCallback(async () => {
     const list = await api<Room[]>('/rooms');
     setRooms(list);
@@ -122,8 +120,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       loadingRooms.current.delete(roomId);
     }
   }, []);
-
-  // ---------- Conexão em tempo real ----------
 
   useEffect(() => {
     if (!token) return;
@@ -219,7 +215,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     };
   }, [token, me.id, logout, fetchRooms, fetchUsers]);
 
-  // Carga inicial
   useEffect(() => {
     fetchRooms().catch((err) =>
       notifications.show({ color: 'red', title: 'Erro ao carregar salas', message: errorMessage(err) })
@@ -227,7 +222,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     fetchUsers().catch(() => {});
   }, [fetchRooms, fetchUsers]);
 
-  // Abre a sala ativa: carrega o histórico (se preciso), zera não lidas e lembra a escolha
   const activeMessages = activeRoomId ? (messages[activeRoomId] ?? null) : null;
   useEffect(() => {
     if (!activeRoomId) return;
@@ -243,8 +237,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       // ignorado: só serve para reabrir a mesma sala
     }
   }, [activeRoomId]);
-
-  // ---------- Ações ----------
 
   const selectRoom = useCallback((roomId: number) => setActiveRoomId(roomId), []);
 

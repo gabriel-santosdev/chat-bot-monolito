@@ -1,4 +1,3 @@
-// Tipos compartilhados entre back-end (server/) e front-end (client/).
 // Tudo que trafega pela API REST ou pelo Socket.IO deve ser tipado aqui.
 
 export interface HealthResponse {
@@ -10,8 +9,6 @@ export interface HealthResponse {
 export interface ApiError {
   error: string;
 }
-
-// ---------- Entidades ----------
 
 export interface User {
   id: number;
@@ -45,8 +42,6 @@ export interface Message {
   createdAt: string;
 }
 
-// ---------- Respostas da API ----------
-
 export interface AuthResponse {
   token: string;
   user: User;
@@ -56,8 +51,6 @@ export interface MessagePage {
   messages: Message[]; // em ordem cronológica (mais antiga primeiro)
   hasMore: boolean;
 }
-
-// ---------- Socket.IO ----------
 
 export type Ack<T> = (res: { ok: true; data: T } | { ok: false; error: string }) => void;
 

@@ -1,4 +1,3 @@
-// Conexão com o SQLite (módulo nativo node:sqlite) e migrações versionadas.
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
@@ -77,7 +76,6 @@ function migrate() {
 
 migrate();
 
-// Executa `fn` dentro de uma transação (commit no sucesso, rollback em erro).
 export function transaction<T>(fn: () => T): T {
   db.exec('BEGIN');
   try {

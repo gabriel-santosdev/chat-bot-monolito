@@ -13,7 +13,6 @@ export function createApp(io: IoServer): Express {
   app.disable('x-powered-by');
   app.use(express.json({ limit: '100kb' }));
 
-  // ---------- API ----------
   const api = express.Router();
 
   api.get('/health', (_req, res) => {
@@ -32,7 +31,6 @@ export function createApp(io: IoServer): Express {
 
   app.use('/api', api);
 
-  // ---------- Arquivos enviados ----------
   app.use('/uploads', uploadsStatic, (_req, res) => {
     res.status(404).json({ error: 'Arquivo não encontrado' } satisfies ApiError);
   });

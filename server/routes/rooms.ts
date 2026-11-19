@@ -7,7 +7,6 @@ import { currentUser, requireAuth } from '../lib/auth.js';
 import { AppError, parse } from '../lib/errors.js';
 import type { IoServer } from '../socket.js';
 
-// Inteiro positivo vindo da URL (string), com uma única mensagem de erro em português
 const positiveInt = (error: string) => z.coerce.number({ error }).int({ error }).positive({ error });
 
 const idParam = positiveInt('ID de sala inválido');

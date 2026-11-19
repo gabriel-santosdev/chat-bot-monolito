@@ -1,12 +1,4 @@
-// Popula o banco com dados de desenvolvimento: usuários, salas, conversas e anexos.
-//
-//   npm run seed                      -> adiciona os dados (aborta se a seed já foi aplicada)
-//   npm run seed -- --reset           -> apaga TUDO (banco e uploads) e recria
-//   npm run seed -- --messages 1500   -> quantidade aproximada de mensagens (padrão: 600)
-//   npm run seed -- --days 60         -> período coberto pelas conversas (padrão: 30 dias)
-//   npm run seed -- --seed 42         -> semente do gerador (mesma semente = mesmos dados)
-//
-// Todos os usuários criados usam a senha SEED_PASSWORD (abaixo).
+// Dados de desenvolvimento. Uso e opções: seção "Dados de exemplo" do README.
 import { config } from '../config/env.js'; // precisa ser o primeiro import (carrega o .env)
 import { randomUUID } from 'node:crypto';
 import { mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
@@ -17,8 +9,6 @@ import { hashPassword } from '../lib/auth.js';
 import { db, transaction } from './index.js';
 
 export const SEED_PASSWORD = 'senha123';
-
-// ---------- Argumentos ----------
 
 const { values: args } = parseArgs({
   options: {
@@ -38,7 +28,7 @@ if (config.isProd && !args.force) {
   process.exit(1);
 }
 
-// ---------- Gerador pseudoaleatório determinístico (mulberry32) ----------
+// Gerador determinístico (mulberry32): mesma semente, mesmos dados
 
 let state = (Number(args.seed) || 2026) >>> 0;
 function random(): number {
@@ -59,8 +49,6 @@ function sample<T>(list: readonly T[], n: number): T[] {
   }
   return copy.slice(0, n);
 }
-
-// ---------- Dados base ----------
 
 const USERS = [
   { username: 'ana.souza', displayName: 'Ana Souza' },
@@ -251,7 +239,6 @@ const ROOMS: RoomSeed[] = [
   },
 ];
 
-// Respostas curtas para preencher as conversas entre os roteiros
 const FILLER = [
   'Show!',
   'Boa!',
@@ -277,8 +264,6 @@ const FILLER = [
 
 const FILE_CAPTIONS = ['Segue o arquivo', 'Dá uma olhada nisso', 'Print do que comentei', 'Aqui está', ''];
 
-// ---------- Geração de anexos (PNG gerado em memória, sem dependências) ----------
-
 function pngChunk(type: string, data: Buffer): Buffer {
   const len = Buffer.alloc(4);
   len.writeUInt32BE(data.length);
@@ -288,7 +273,6 @@ function pngChunk(type: string, data: Buffer): Buffer {
   return Buffer.concat([len, typeAndData, crc]);
 }
 
-// Imagem RGB com gradiente diagonal entre duas cores
 function makeGradientPng(width: number, height: number, from: number[], to: number[]): Buffer {
   const raw = Buffer.alloc((width * 3 + 1) * height);
   for (let y = 0; y < height; y++) {
@@ -354,8 +338,6 @@ function makeAttachmentFile(): GeneratedFile {
   };
 }
 
-// ---------- Linha do tempo ----------
-
 // Horário "realista": maioria em horário comercial, poucas mensagens à noite/fim de semana
 function randomMoment(start: number, end: number): number {
   for (;;) {
@@ -388,7 +370,6 @@ function planMessages(): PlannedMessage[] {
     let count = 0;
 
     while (count < budget) {
-      // Uma "rodada" de conversa: começa num momento e segue com respostas em sequência
       let at = randomMoment(start, end);
       const participants = sample(members, int(2, Math.min(5, members.length)));
       const scripted = chance(0.6);
@@ -413,7 +394,7 @@ function planMessages(): PlannedMessage[] {
           file: withFile ? makeAttachmentFile() : null,
         });
         count++;
-        at = Math.min(end, at + int(10, 600) * 1000); // próxima resposta entre 10s e 10min depois
+        at = Math.min(end, at + int(10, 600) * 1000);
       }
     }
   }
@@ -421,8 +402,6 @@ function planMessages(): PlannedMessage[] {
   // Ids crescentes precisam acompanhar a ordem cronológica (a paginação usa o id)
   return planned.sort((a, b) => a.at - b.at);
 }
-
-// ---------- Execução ----------
 
 function resetAll() {
   transaction(() => {
@@ -518,7 +497,6 @@ async function main() {
 try {
   await main();
 } catch (err) {
-  // A transação já foi desfeita; remove os arquivos que chegaram a ser gravados
   for (const path of writtenFiles) rmSync(path, { force: true });
   console.error('[seed] falhou:', err);
   process.exitCode = 1;

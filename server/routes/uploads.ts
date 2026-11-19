@@ -11,7 +11,6 @@ import { AppError } from '../lib/errors.js';
 
 mkdirSync(config.uploadDir, { recursive: true });
 
-// Arquivos são salvos com nome aleatório (UUID); o nome original fica só no banco.
 const upload = multer({
   storage: multer.diskStorage({
     destination: config.uploadDir,
@@ -26,7 +25,6 @@ const upload = multer({
 // Multer decodifica o nome do arquivo como latin1; convertemos para UTF-8 (acentos)
 const decodeName = (name: string) => Buffer.from(name, 'latin1').toString('utf8');
 
-// POST /api/uploads (multipart, campo "file") -> Attachment ainda não vinculado a mensagem
 export const uploadsApiRouter = Router();
 
 uploadsApiRouter.post('/', requireAuth, upload.single('file'), (req, res) => {
@@ -48,7 +46,6 @@ export const uploadErrorHandler: ErrorRequestHandler = (err, _req, _res, next) =
   next(err);
 };
 
-// GET /uploads/<arquivo>: arquivos enviados pelos usuários.
 // Só imagens "seguras" abrem no navegador; o resto é forçado a download, e tudo roda em sandbox
 // (evita que um HTML/SVG enviado execute scripts na origem do app).
 const INLINE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif']);

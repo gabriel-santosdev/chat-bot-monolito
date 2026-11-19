@@ -1,8 +1,5 @@
-// Acesso aos dados: consultas SQL e conversão das linhas para os tipos de shared/types.
 import type { Attachment, Message, Room, User } from '../../shared/types.js';
 import { db } from './index.js';
-
-// ---------- Usuários ----------
 
 interface UserRow {
   id: number;
@@ -36,7 +33,6 @@ export const users = {
     return row ? toUser(row) : null;
   },
 
-  // Retorna também o hash, usado apenas no login
   findByUsernameWithHash(username: string): { user: User; passwordHash: string } | null {
     const row = userStmts.byUsername.get(username) as UserRow | undefined;
     return row ? { user: toUser(row), passwordHash: row.password_hash } : null;
@@ -46,8 +42,6 @@ export const users = {
     return toUser(userStmts.insert.get(username, displayName, passwordHash) as unknown as UserRow);
   },
 };
-
-// ---------- Salas ----------
 
 interface RoomRow {
   id: number;
@@ -91,8 +85,6 @@ export const rooms = {
   },
 };
 
-// ---------- Anexos ----------
-
 interface AttachmentRow {
   id: number;
   uploader_id: number;
@@ -135,8 +127,6 @@ export const attachments = {
     return Number(attachmentStmts.link.run(messageId, attachmentId).changes) === 1;
   },
 };
-
-// ---------- Mensagens ----------
 
 interface MessageRow {
   id: number;
