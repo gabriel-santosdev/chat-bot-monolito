@@ -1,0 +1,57 @@
+// Bloco: chat-layout (estrutura geral: cabeçalho, menu lateral e área da conversa)
+
+.chat-layout {
+  &__brand {
+    min-width: 0;
+  }
+
+  &__logo {
+    flex: none;
+    color: var(--mantine-primary-color-filled);
+  }
+
+  &__user {
+    padding: $space-xs $space-sm;
+    border-radius: var(--mantine-radius-md);
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background: var(--mantine-color-default-hover);
+    }
+  }
+
+  &__user-name {
+    @include truncate;
+    max-width: 160px;
+  }
+
+  // A área principal ocupa exatamente a altura da tela: a lista rola, o campo de envio fica fixo
+  &__main {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
+
+  &__room {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    min-height: 48px;
+    padding: $space-sm $space-md;
+    border-bottom: 1px solid var(--mantine-color-default-border);
+  }
+
+  &__room-icon {
+    color: var(--mantine-color-dimmed);
+  }
+
+  &__room-description {
+    @include truncate;
+    min-width: 0;
+
+    &::before {
+      content: '·';
+      margin-right: $space-sm;
+    }
+  }
+}

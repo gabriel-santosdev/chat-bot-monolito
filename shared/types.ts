@@ -11,10 +11,74 @@ export interface ApiError {
   error: string;
 }
 
+// ---------- Entidades ----------
+
+export interface User {
+  id: number;
+  username: string;
+  displayName: string;
+  createdAt: string;
+}
+
+export interface Room {
+  id: number;
+  name: string;
+  description: string | null;
+  createdBy: number | null;
+  createdAt: string;
+}
+
+export interface Attachment {
+  id: number;
+  url: string;
+  originalName: string;
+  mimeType: string;
+  size: number;
+}
+
+export interface Message {
+  id: number;
+  roomId: number;
+  author: User;
+  content: string;
+  attachment: Attachment | null;
+  createdAt: string;
+}
+
+// ---------- Respostas da API ----------
+
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
+
+export interface MessagePage {
+  messages: Message[]; // em ordem cronológica (mais antiga primeiro)
+  hasMore: boolean;
+}
+
 // ---------- Socket.IO ----------
-// Os eventos serão adicionados conforme as funcionalidades forem criadas
-// (mensagens, digitação, presença, salas...).
 
-export interface ServerToClientEvents {}
+export type Ack<T> = (res: { ok: true; data: T } | { ok: false; error: string }) => void;
 
-export interface ClientToServerEvents {}
+export interface TypingEvent {
+  roomId: number;
+  user: Pick<User, 'id' | 'displayName'>;
+  isTyping: boolean;
+}
+
+export interface ServerToClientEvents {
+  'message:new': (message: Message) => void;
+  'room:new': (room: Room) => void;
+  'typing:update': (event: TypingEvent) => void;
+  'presence:update': (onlineUserIds: number[]) => void;
+}
+
+export interface ClientToServerEvents {
+  'message:send': (payload: { roomId: number; content: string; attachmentId?: number }, ack: Ack<Message>) => void;
+  'typing:set': (payload: { roomId: number; isTyping: boolean }) => void;
+}
+
+export interface SocketData {
+  user: User;
+}

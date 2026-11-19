@@ -1,0 +1,115 @@
+// Blocos: message-list e message
+
+.message-list {
+  flex: 1;
+  min-height: 0;
+
+  &--center {
+    height: 100%;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 100%;
+    padding: $space-md 0;
+  }
+
+  &__empty {
+    padding: $space-xl $space-md;
+    margin: auto 0;
+    text-align: center;
+  }
+
+  &__day {
+    margin: $space-md $space-md $space-sm;
+  }
+}
+
+.message {
+  display: flex;
+  gap: $space-sm + $space-xs;
+  padding: $space-xs $space-md;
+  margin-top: $space-sm;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background: var(--mantine-color-gray-0);
+
+    @include dark {
+      background: var(--mantine-color-dark-6);
+    }
+  }
+
+  &--compact {
+    margin-top: 0;
+    padding-block: 2px;
+  }
+
+  &__gutter {
+    flex: 0 0 38px;
+    display: flex;
+    justify-content: center;
+  }
+
+  // No modo compacto, o horário aparece na lateral só ao passar o mouse
+  &--compact &__time {
+    visibility: hidden;
+    line-height: 1.55rem;
+    font-size: 10px;
+  }
+
+  &--compact:hover &__time {
+    visibility: visible;
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__header {
+    line-height: 1.2;
+  }
+
+  &__content {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.55;
+  }
+
+  &__image-link {
+    display: inline-block;
+    margin-top: $space-xs;
+  }
+
+  &__image {
+    display: block;
+    max-width: min(360px, 100%);
+    max-height: 320px;
+    border-radius: var(--mantine-radius-md);
+    border: 1px solid var(--mantine-color-default-border);
+    object-fit: cover;
+  }
+
+  &__file {
+    display: inline-block;
+    max-width: min(360px, 100%);
+    margin-top: $space-xs;
+  }
+
+  &__file-icon {
+    flex: none;
+    color: var(--mantine-primary-color-filled);
+  }
+
+  &__file-info {
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__file-name {
+    @include truncate;
+  }
+}

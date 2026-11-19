@@ -1,0 +1,56 @@
+// Bloco: composer (campo de envio de mensagens)
+
+.composer {
+  padding: 0 $space-md $space-xs;
+
+  &__attachment {
+    max-width: 360px;
+    margin-bottom: $space-sm;
+  }
+
+  &__attachment-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__attachment-name {
+    @include truncate;
+  }
+
+  &__box {
+    display: flex;
+    align-items: flex-end;
+    gap: $space-xs;
+    padding: $space-xs;
+    border: 1px solid var(--mantine-color-default-border);
+    border-radius: var(--mantine-radius-lg);
+    background: var(--mantine-color-default);
+    transition: border-color $transition-fast;
+
+    &:focus-within {
+      border-color: var(--mantine-primary-color-filled);
+    }
+  }
+
+  &__input {
+    flex: 1;
+    align-self: center;
+
+    textarea {
+      padding-inline: $space-xs;
+      @include scrollbar-thin;
+    }
+  }
+
+  &__hint {
+    min-height: 1.4em;
+    padding: 2px $space-sm 0;
+    font-style: italic;
+  }
+
+  &__drop {
+    height: 100%;
+    color: var(--mantine-primary-color-filled);
+    pointer-events: none;
+  }
+}

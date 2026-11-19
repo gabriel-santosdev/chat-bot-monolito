@@ -4,10 +4,13 @@ import { resolve } from 'node:path';
 import express from 'express';
 import { createApp, errorHandler } from './app.js';
 import { createSocketServer } from './socket.js';
+import './db/index.js'; // abre o banco e aplica as migrações antes de aceitar conexões
 
-const app = createApp();
-const httpServer = createServer(app);
-createSocketServer(httpServer);
+// O Socket.IO precisa do servidor HTTP, e as rotas precisam do Socket.IO (para emitir eventos)
+const httpServer = createServer();
+const io = createSocketServer(httpServer);
+const app = createApp(io);
+httpServer.on('request', app);
 
 // ---------- Front-end ----------
 if (config.isProd) {

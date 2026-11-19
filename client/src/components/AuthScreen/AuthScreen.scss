@@ -1,0 +1,30 @@
+// Bloco: auth-screen
+
+.auth-screen {
+  @include flex-center;
+  position: relative;
+  min-height: 100dvh;
+  padding: $space-md;
+  background:
+    radial-gradient(circle at 20% 10%, var(--mantine-primary-color-light) 0, transparent 45%),
+    var(--mantine-color-body);
+
+  &__toggle {
+    position: absolute;
+    top: $space-md;
+    right: $space-md;
+  }
+
+  &__card {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  &__logo {
+    color: var(--mantine-primary-color-filled);
+  }
+
+  &__title {
+    letter-spacing: -0.02em;
+  }
+}

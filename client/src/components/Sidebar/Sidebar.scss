@@ -1,0 +1,41 @@
+// Bloco: sidebar
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+
+  &__scroll {
+    flex: 1;
+  }
+
+  &__section {
+    padding: $space-sm;
+
+    & + & {
+      border-top: 1px solid var(--mantine-color-default-border);
+    }
+  }
+
+  &__heading {
+    padding: $space-xs $space-sm $space-sm;
+  }
+
+  &__room {
+    border-radius: var(--mantine-radius-md);
+  }
+
+  &__person {
+    padding: $space-xs $space-sm;
+    border-radius: var(--mantine-radius-md);
+
+    &--offline {
+      opacity: 0.55;
+    }
+  }
+
+  &__person-name {
+    @include truncate;
+  }
+}
