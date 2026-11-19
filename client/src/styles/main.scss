@@ -1,0 +1,23 @@
+// Estilos globais. Componentes têm seu próprio .scss ao lado do .tsx, no padrão BEM.
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--mantine-color-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--mantine-primary-color-light);
+}

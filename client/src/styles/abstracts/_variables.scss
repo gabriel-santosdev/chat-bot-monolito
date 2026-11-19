@@ -1,0 +1,16 @@
+// Tokens de espaçamento e layout usados nas customizações SCSS.
+// Cores vêm das variáveis CSS do Mantine (var(--mantine-color-*)), para seguir o tema claro/escuro.
+
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+
+$sidebar-width: 300px;
+$header-height: 60px;
+
+$breakpoint-sm: 48em;
+$breakpoint-md: 62em;
+
+$transition-fast: 120ms ease;

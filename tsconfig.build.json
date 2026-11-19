@@ -1,0 +1,11 @@
+{
+  // Compila o back-end para build/ (usado por `npm run build` / `npm start`).
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": ".",
+    "outDir": "build",
+    "sourceMap": true
+  },
+  "include": ["server", "shared"]
+}

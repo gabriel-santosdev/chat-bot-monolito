@@ -1,0 +1,62 @@
+// Bloco: server-status (padrão BEM: bloco__elemento--modificador)
+
+.server-status {
+  @include flex-center;
+  min-height: 100dvh;
+  padding: $space-md;
+
+  &__card {
+    width: 100%;
+    max-width: 440px;
+  }
+
+  &__logo {
+    color: var(--mantine-primary-color-filled);
+  }
+
+  &__title {
+    letter-spacing: -0.02em;
+  }
+
+  &__item {
+    padding: $space-sm $space-md;
+    border-radius: var(--mantine-radius-md);
+    background: var(--mantine-color-gray-0);
+
+    @include dark {
+      background: var(--mantine-color-dark-6);
+    }
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--mantine-color-gray-5);
+
+    &--online {
+      background: var(--mantine-color-teal-6);
+      animation: server-status-pulse 2s infinite;
+    }
+
+    &--offline {
+      background: var(--mantine-color-red-6);
+    }
+  }
+
+  &__footer {
+    line-height: 1.5;
+  }
+}
+
+@keyframes server-status-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(18, 184, 134, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(18, 184, 134, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(18, 184, 134, 0);
+  }
+}
